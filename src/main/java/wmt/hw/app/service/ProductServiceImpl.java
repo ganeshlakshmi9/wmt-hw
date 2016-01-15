@@ -79,10 +79,10 @@ public class ProductServiceImpl implements ProductService {
 	 * 	 * @see wmt.hw.app.ProductService#getRecommendedProducts(java.lang.Integer)
 
 	 */
-	public List<Item> getRecommendedProducts(Integer itemid)
+	public List<Item> getRecommendedProducts(Integer itemId)
 			throws JsonParseException, JsonMappingException, HttpException, IOException {
 		Map<String, String> parametersMap = createBasicParameters();
-		parametersMap.put("itemId", itemid.toString());
+		parametersMap.put("itemId", itemId.toString());
 		return mapper.readValue(RestRunner.execute(RECOMMENDATION_URL, parametersMap),
 				TypeFactory.defaultInstance().constructCollectionType(List.class, Item.class));
 	}
@@ -92,10 +92,10 @@ public class ProductServiceImpl implements ProductService {
 	 * 
 	 * @see wmt.hw.app.ProductService#getProductReview(java.lang.Integer)
 	 */
-	public ProductReview getProductReview(Integer itemid)
+	public ProductReview getProductReview(Integer itemId)
 			throws JsonParseException, JsonMappingException, HttpException, IOException {
 		Map<String, String> parametersMap = createBasicParameters();
-		String reviewUrlWithId = String.format("%s%d", REVIEW_URL, itemid);
+		String reviewUrlWithId = String.format("%s%d", REVIEW_URL, itemId);
 		return mapper.readValue(RestRunner.execute(reviewUrlWithId, parametersMap), ProductReview.class);
 	}
 

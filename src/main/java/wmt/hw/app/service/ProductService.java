@@ -7,6 +7,7 @@ import java.util.Set;
 import org.apache.commons.httpclient.HttpException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
+import org.eclipse.jetty.http.HttpStatus.Code;
 
 import wmt.hw.app.domain.Item;
 import wmt.hw.app.domain.ProductReview;
@@ -50,7 +51,7 @@ public interface ProductService {
 			IOException;
 
 	/**
-	 * Retrieve product recommendations based on the provided item id.
+	 * Retrieves product recommendations based on the provided item id.
 	 * 
 	 * @param itemid
 	 * @return
@@ -64,16 +65,16 @@ public interface ProductService {
 			IOException;
 
 	/**
-	 * Retrieve product review.
+	 * Retrieves product review and returns {@link ProductReview} for the given itemId.
 	 * 
 	 * @param itemid
-	 * @return
+	 * @return 
 	 * @throws JsonParseException
 	 * @throws JsonMappingException
 	 * @throws HttpException
 	 * @throws IOException
 	 */
-	public abstract ProductReview getProductReview(Integer itemid)
+	public abstract ProductReview getProductReview(Integer itemId)
 			throws JsonParseException, JsonMappingException, HttpException,
 			IOException;
 

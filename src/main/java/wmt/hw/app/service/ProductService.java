@@ -13,18 +13,23 @@ import wmt.hw.app.domain.ProductReview;
 import wmt.hw.app.domain.SearchResponse;
 
 /**
- * @author lakshmiganesh
+ * @author Ganesh Muthuluru
  * 
- * Product service interface that provides operations for search , recommend and review
+ *         Product service interface that provides operations for search,
+ *         recommendations and review
  *
  */
 public interface ProductService {
 
 	/**
-	 * Recommend top products based on the rating
+	 * Recommends top products based on the rating. This uses a Facade pattern.
+	 * 
+	 * It searches for the items with given string and then retrieves the
+	 * recommendations for the first item in the search results and then displays the
+	 * first 10 recommendations items in the decreasing order of their overall customer reviews reviews.
 	 * 
 	 * @param query
-	 * @return
+	 * @return {@link Set<Item>}
 	 * @throws IOException
 	 */
 	public abstract Set<Item> getProductRecommendationsByRating(String query)
@@ -34,7 +39,7 @@ public interface ProductService {
 	 * Search products based on the provided search criteria
 	 * 
 	 * @param query
-	 * @return
+	 * @return {@link SearchResponse}
 	 * @throws JsonParseException
 	 * @throws JsonMappingException
 	 * @throws HttpException

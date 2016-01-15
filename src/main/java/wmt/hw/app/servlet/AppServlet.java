@@ -10,11 +10,18 @@ import wmt.hw.app.domain.Item;
 import wmt.hw.app.service.ProductService;
 import wmt.hw.app.service.ProductServiceImpl;
 
+/**
+ * @author lakshmiganesh
+ *
+ */
 public class AppServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String QUERY_PARAM = "query";
 	private ProductService productService = new ProductServiceImpl();
 
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html");
@@ -31,6 +38,10 @@ public class AppServlet extends HttpServlet {
 
 	}
 
+	/**
+	 * @param response
+	 * @throws IOException
+	 */
 	private void writeDocumentStart(HttpServletResponse response) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<html>")
@@ -39,6 +50,10 @@ public class AppServlet extends HttpServlet {
 		response.getWriter().println(sb.toString());
 	}
 
+	/**
+	 * @param response
+	 * @throws IOException
+	 */
 	private void writeSearchForm(HttpServletResponse response) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		
@@ -50,12 +65,21 @@ public class AppServlet extends HttpServlet {
 		response.getWriter().println(sb.toString());
 	}
 
+	/**
+	 * @param response
+	 * @throws IOException
+	 */
 	private void writeDocumentEnd(HttpServletResponse response) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("</body>").append("</html>");
 		response.getWriter().println(sb.toString());
 	}
 	
+	/**
+	 * @param item
+	 * @param response
+	 * @throws IOException
+	 */
 	private void writeResults(Item item, HttpServletResponse response) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("<h2>%s</h2>", item.getName()))

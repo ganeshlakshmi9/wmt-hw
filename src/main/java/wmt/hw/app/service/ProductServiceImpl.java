@@ -22,11 +22,14 @@ import wmt.hw.app.domain.ProductReview;
 import wmt.hw.app.domain.SearchResponse;
 import wmt.hw.app.http.RestRunner;
 
-
+/**
+ * @author Ganesh Muthuluru
+ *
+ */
 public class ProductServiceImpl implements ProductService {
-	private static final String searchUrl = "http://api.walmartlabs.com/v1/search";
-	private static final String recoUrl = "http://api.walmartlabs.com/v1/nbp";
-	private static final String reviewUrl = "http://api.walmartlabs.com/v1/reviews/";
+	private static final String SEARCH_URL = "http://api.walmartlabs.com/v1/search";
+	private static final String RECOMMENDATION_URL = "http://api.walmartlabs.com/v1/nbp";
+	private static final String REVIEW_URL = "http://api.walmartlabs.com/v1/reviews/";
 	private ObjectMapper mapper = new ObjectMapper();
 
 	/*
@@ -65,22 +68,22 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	public SearchResponse searchProducts(String query)
 			throws JsonParseException, JsonMappingException, HttpException, IOException {
-		Map<String, String> params = createParams();
-		params.put("query", query);
-		SearchResponse response = mapper.readValue(RestRunner.execute(searchUrl, params), SearchResponse.class);
+		Map<String, String> parametersMap = createBasicParameters();
+		parametersMap.put("query", query);
+		SearchResponse response = mapper.readValue(RestRunner.execute(SEARCH_URL, parametersMap), SearchResponse.class);
 		return response;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see wmt.hw.app.ProductService#getRecommendedProducts(java.lang.Integer)
+	 * 	 * @see wmt.hw.app.ProductService#getRecommendedProducts(java.lang.Integer)
+
 	 */
 	public List<Item> getRecommendedProducts(Integer itemid)
 			throws JsonParseException, JsonMappingException, HttpException, IOException {
-		Map<String, String> params = createParams();
-		params.put("itemId", itemid.toString());
-		return mapper.readValue(RestRunner.execute(recoUrl, params),
+		Map<String, String> parametersMap = createBasicParameters();
+		parametersMap.put("itemId", itemid.toString());
+		return mapper.readValue(RestRunner.execute(RECOMMENDATION_URL, parametersMap),
 				TypeFactory.defaultInstance().constructCollectionType(List.class, Item.class));
 	}
 
@@ -91,15 +94,18 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	public ProductReview getProductReview(Integer itemid)
 			throws JsonParseException, JsonMappingException, HttpException, IOException {
-		Map<String, String> params = createParams();
-		String reviewUrlWithId = String.format("%s%d", reviewUrl, itemid);
-		return mapper.readValue(RestRunner.execute(reviewUrlWithId, params), ProductReview.class);
+		Map<String, String> parametersMap = createBasicParameters();
+		String reviewUrlWithId = String.format("%s%d", REVIEW_URL, itemid);
+		return mapper.readValue(RestRunner.execute(reviewUrlWithId, parametersMap), ProductReview.class);
 	}
 
-	private Map<String, String> createParams() {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("apiKey", "vgs9ka37ckfw5bqchnfufmf9");
-		return params;
+	/**
+	 * @return
+	 */
+	private Map<String, String> createBasicParameters() {
+		Map<String, String> basicParameters = new HashMap<String, String>();
+		basicParameters.put("apiKey", "vgs9ka37ckfw5bqchnfufmf9");
+		return basicParameters;
 	}
 
 }
